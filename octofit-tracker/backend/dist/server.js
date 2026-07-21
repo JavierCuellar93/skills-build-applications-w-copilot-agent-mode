@@ -1,12 +1,15 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import { apiRoutes } from './routes/apiRoutes.js';
-import { getApiBaseUrl } from './utils/apiUrl.js';
 const app = express();
 const port = 8000;
+const codespaceName = process.env.CODESPACE_NAME;
+const apiBaseUrl = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev`
+    : 'http://localhost:8000';
 app.use(express.json());
 app.get('/api/health', (_req, res) => {
-    res.json({ status: 'ok', apiUrl: getApiBaseUrl() });
+    res.json({ status: 'ok', apiUrl: apiBaseUrl });
 });
 app.use('/api', apiRoutes);
 const startServer = async () => {
