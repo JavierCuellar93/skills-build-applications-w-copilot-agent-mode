@@ -1,28 +1,50 @@
-import './App.css'
+import { NavLink, Route, Routes } from 'react-router-dom';
+import Activities from './components/Activities.jsx';
+import Leaderboard from './components/Leaderboard.jsx';
+import Teams from './components/Teams.jsx';
+import Users from './components/Users.jsx';
+import Workouts from './components/Workouts.jsx';
+import './App.css';
+
+const navItems = [
+  { to: '/', label: 'Overview' },
+  { to: '/users', label: 'Users' },
+  { to: '/teams', label: 'Teams' },
+  { to: '/activities', label: 'Activities' },
+  { to: '/leaderboard', label: 'Leaderboard' },
+  { to: '/workouts', label: 'Workouts' },
+];
 
 function App() {
   return (
-    <main className="container py-5">
-      <div className="row justify-content-center">
-        <div className="col-lg-8">
-          <div className="card shadow-sm border-0">
-            <div className="card-body p-5">
-              <h1 className="display-5 fw-bold mb-3">OctoFit Tracker</h1>
-              <p className="lead text-muted mb-4">
-                A modern multi-tier fitness app for tracking activities, managing teams,
-                and climbing the leaderboard.
-              </p>
-              <div className="d-flex gap-3 flex-wrap">
-                <span className="badge bg-primary">React 19</span>
-                <span className="badge bg-success">Express + TypeScript</span>
-                <span className="badge bg-info text-dark">MongoDB + Mongoose</span>
-              </div>
-            </div>
-          </div>
+    <div className="container py-4">
+      <header className="mb-4">
+        <h1 className="display-6 fw-bold">OctoFit Tracker</h1>
+        <p className="text-muted">
+          Multi-tier fitness insights with environment-aware API routes.
+        </p>
+        <div className="alert alert-info small mb-3">
+          Define <code>VITE_CODESPACE_NAME</code> in <code>.env.local</code> for Codespaces URLs.
         </div>
-      </div>
-    </main>
-  )
+        <nav className="nav nav-pills flex-wrap gap-2">
+          {navItems.map((item) => (
+            <NavLink key={item.to} to={item.to} className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+      </header>
+
+      <Routes>
+        <Route path="/" element={<div className="card shadow-sm border-0"><div className="card-body"><p className="mb-0">Select a section to explore the OctoFit data.</p></div></div>} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/teams" element={<Teams />} />
+        <Route path="/activities" element={<Activities />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/workouts" element={<Workouts />} />
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;
