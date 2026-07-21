@@ -13,7 +13,9 @@ function Users() {
       try {
         const response = await fetch(buildApiUrl(usersEndpoint));
         const payload = await response.json();
-        const data = Array.isArray(payload) ? payload : payload.items ?? payload.results ?? [];
+        const data = Array.isArray(payload)
+          ? payload
+          : payload.items ?? payload.results ?? payload.data ?? [];
         setItems(data);
       } catch (err) {
         setError(err.message || 'Unable to load users.');
