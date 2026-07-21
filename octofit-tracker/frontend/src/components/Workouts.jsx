@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { buildApiUrl } from '../utils/api.js';
 
+const workoutsEndpoint = '/api/workouts/';
+
 function Workouts() {
   const [items, setItems] = useState([]);
   const [error, setError] = useState('');
@@ -9,7 +11,7 @@ function Workouts() {
   useEffect(() => {
     const loadWorkouts = async () => {
       try {
-        const response = await fetch(buildApiUrl('workouts'));
+        const response = await fetch(buildApiUrl(workoutsEndpoint));
         const payload = await response.json();
         const data = Array.isArray(payload) ? payload : payload.items ?? payload.results ?? [];
         setItems(data);

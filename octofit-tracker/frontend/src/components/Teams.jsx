@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { buildApiUrl } from '../utils/api.js';
 
+const teamsEndpoint = '/api/teams/';
+
 function Teams() {
   const [items, setItems] = useState([]);
   const [error, setError] = useState('');
@@ -9,7 +11,7 @@ function Teams() {
   useEffect(() => {
     const loadTeams = async () => {
       try {
-        const response = await fetch(buildApiUrl('teams'));
+        const response = await fetch(buildApiUrl(teamsEndpoint));
         const payload = await response.json();
         const data = Array.isArray(payload) ? payload : payload.items ?? payload.results ?? [];
         setItems(data);
