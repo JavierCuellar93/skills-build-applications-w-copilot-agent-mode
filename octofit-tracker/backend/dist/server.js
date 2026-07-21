@@ -2,26 +2,20 @@ import express from 'express';
 import mongoose from 'mongoose';
 import { apiRoutes } from './routes/apiRoutes.js';
 import { getApiBaseUrl } from './utils/apiUrl.js';
-
 const app = express();
 const port = 8000;
-
 app.use(express.json());
-
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', apiUrl: getApiBaseUrl() });
+    res.json({ status: 'ok', apiUrl: getApiBaseUrl() });
 });
-
 app.use('/api', apiRoutes);
-
 const startServer = async () => {
-  await mongoose.connect('mongodb://127.0.0.1:27017/octofit_db');
-  app.listen(port, () => {
-    console.log(`Backend listening on port ${port}`);
-  });
+    await mongoose.connect('mongodb://127.0.0.1:27017/octofit_db');
+    app.listen(port, () => {
+        console.log(`Backend listening on port ${port}`);
+    });
 };
-
 startServer().catch((error) => {
-  console.error('Failed to start server', error);
-  process.exit(1);
+    console.error('Failed to start server', error);
+    process.exit(1);
 });
